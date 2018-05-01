@@ -4,7 +4,7 @@
 	
 	$spisok_rus = file_get_contents("russian-utf8.txt");
 	$words_rus = explode("\r\n", $spisok_rus, 532797);
-	$spisok_ukr = file_get_contents("ukrainian-utf8.txt");
+	$spisok_ukr = file_get_contents("english-utf8.txt");//ukrainian-utf8.txt
 	$words_ukr = explode("\r\n", $spisok_ukr, 532797);
 	
 	for($i=0; $i<532797; $i++){
@@ -16,7 +16,13 @@
 	//$fraza = "я Люблю Авиастроительный институт, очень сильно. Но не знаю, как его найти<a href=http://vasya.ru><img src=http://vasya.ru/1.jpg></a>. Я хочу вступить в КПСС. Просунув руку я увидел висевшую ногу.";
 	//echo $fraza, "<br>";
 	$fraza = file_get_contents("https://habrahabr.ru/post/352976/");
+	$perevod = perekladach( $fraza );
+	echo $perevod;
 	
+function perekladach( $fraza )
+{
+	global $assoc_words;
+	$fraza = str_replace ( "\n", "\n ", $fraza );
 	$fraza = str_replace ( '<', " <", $fraza );$fraza = str_replace ( '>', "> ", $fraza );$fraza = str_replace ( '.', " . ", $fraza );$fraza = str_replace ( '!', " ! ", $fraza );$fraza = str_replace ( '-', " - ", $fraza );
 	$fraza = str_replace ( ';', " ; ", $fraza );$fraza = str_replace ( ':', " : ", $fraza );$fraza = str_replace ( ',', " , ", $fraza );$fraza = str_replace ( ')', " ) ", $fraza );$fraza = str_replace ( '(', " ( ", $fraza );
 	$fraza = str_replace ( '"', ' " ', $fraza );$fraza = str_replace ( "'", " ' ", $fraza );$fraza = str_replace ( '«', ' « ', $fraza );$fraza = str_replace ( "»", " » ", $fraza );$fraza = str_replace ( "?", " ? ", $fraza );
@@ -37,9 +43,11 @@
 		else $result .= $a_w." ";
 		$i++;
 	}
-	$fraza = $result;
+	$fraza = $result; $fraza = str_replace ( "\n ", "\n", $fraza );
 	$fraza = str_replace ( ' <', "<", $fraza );$fraza = str_replace ( '> ', ">", $fraza );$fraza = str_replace ( ' . ', ".", $fraza );$fraza = str_replace ( ' ! ', "!", $fraza );$fraza = str_replace ( ' - ', "-", $fraza );
 	$fraza = str_replace ( ' ; ', ";", $fraza );$fraza = str_replace ( ' : ', ":", $fraza );$fraza = str_replace ( ' , ', ",", $fraza );$fraza = str_replace ( ' ) ', ")", $fraza );$fraza = str_replace ( ' ( ', "(", $fraza );
 	$fraza = str_replace ( ' " ', '"', $fraza );$fraza = str_replace ( " ' ", "'", $fraza );$fraza = str_replace ( ' « ', '«', $fraza );$fraza = str_replace ( " » ", "»", $fraza );$fraza = str_replace ( " ? ", "?", $fraza );
-	echo $fraza;
+	//echo $fraza;
+	return $fraza;
+}
 ?>
